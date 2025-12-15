@@ -2,169 +2,1142 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: #f8f9fa; }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; }
-        .table thead th { background: #343a40; color: white; font-weight: 500; }
-        .btn-action { padding: 4px 10px; }
-        .badge { font-size: 0.85rem; }
-        .table-container { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        :root {
+            --bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --accent1: #e4570a;
+            --accent2: #ff8400;
+            --accent3: #d4450d;
+            --success: #4CAF50;
+            --text: #333333;
+            --light: #f8f9fa;
+            --border: #e0e0e0;
+            --header-bg: #f1f5f9;
+            --row-hover: #f8fafc;
+        }
+        
+        body { 
+            background: var(--bg); 
+            font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Main Content Wrapper */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow: hidden;
+            background: var(--bg);
+        }
+        
+        /* Header Styles */
+        .main-header {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(228, 87, 10, 0.2);
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .main-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent1));
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-right: auto;
+        }
+        /* FORCE HEADER TO TOUCH LEFT EDGE */
+.header-content{
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.logo-section{
+    margin-left: 0 !important;
+}
+
+        .logo-icon {
+            font-size: 2rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 12px;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        /* Logo in Header */
+        .header-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .header-logo-main {
+            max-width: 180px;
+            width: auto;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        /* Footer Styles */
+        .main-footer {
+            background: #1a1a1a;
+            color: #CCCCCC;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent2);
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            font-size: 0.875rem;
+            color: #999999;
+        }
+        
+        /* Dashboard Header */
+        .dashboard-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+        
+        .dashboard-header h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin: 0;
+            color: var(--accent1);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .dashboard-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            border-radius: 2px;
+        }
+        
+        /* Cards Container with Scrollbar */
+        .cards-scroll-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar styling */
+        .cards-scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .cards-scroll-container::-webkit-scrollbar-track {
+            background: var(--light);
+            border-radius: 4px;
+        }
+        
+        .cards-scroll-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            border-radius: 4px;
+        }
+        
+        .cards-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--accent3), var(--accent1));
+        }
+        
+        /* Collapsible Card Container */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 5px;
+            min-height: min-content;
+        }
+        
+        /* Individual Card */
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+        
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(228, 87, 10, 0.15);
+            border-color: var(--accent2);
+        }
+        
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .card-header:hover {
+            background: rgba(228, 87, 10, 0.03);
+        }
+        
+        .card-header.collapsed {
+            border-bottom: none;
+        }
+        
+        .card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+        
+        .card-id {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(228, 87, 10, 0.3);
+        }
+        
+        .card-title {
+            flex: 1;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+        
+        .card-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
+        
+        .card-arrow {
+            font-size: 1.2rem;
+            color: var(--accent1);
+            transition: all 0.3s ease;
+        }
+        
+        .card-arrow.rotated {
+            transform: rotate(180deg);
+            color: var(--accent2);
+        }
+        
+        /* Card Body */
+        .card-body {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--light);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent1);
+            border: 1px solid var(--border);
+        }
+        
+        .info-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(228, 87, 10, 0.1);
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-value {
+            font-size: 1rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Badge Styles */
+        .badge {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.75rem;
+            font-weight: 500;
+            border-radius: 20px;
+            border: 1px solid transparent;
+        }
+        
+        .badge.bg-success {
+            background: rgba(76, 175, 80, 0.1) !important;
+            color: #2E7D32 !important;
+            border-color: rgba(76, 175, 80, 0.2);
+        }
+        
+        .badge.bg-secondary {
+            background: rgba(97, 97, 97, 0.1) !important;
+            color: #616161 !important;
+            border-color: rgba(97, 97, 97, 0.2);
+        }
+        
+        /* Action Buttons */
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .btn-action {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+        
+        .btn-warning {
+            background: rgba(228, 87, 10, 0.1);
+            color: var(--accent1);
+            border-color: rgba(228, 87, 10, 0.3);
+        }
+        
+        .btn-warning:hover {
+            background: rgba(228, 87, 10, 0.2);
+            transform: translateY(-2px);
+            border-color: var(--accent1);
+            box-shadow: 0 4px 12px rgba(228, 87, 10, 0.2);
+        }
+        
+        .btn-danger {
+            background: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+            border-color: rgba(244, 67, 54, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(244, 67, 54, 0.2);
+            transform: translateY(-2px);
+            border-color: #F44336;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--accent3), var(--accent1));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(228, 87, 10, 0.3);
+        }
+        
+        .btn-lg {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-lg:hover {
+            background: linear-gradient(135deg, var(--accent3), var(--accent2));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(228, 87, 10, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(26, 26, 26, 0.1);
+            color: #1a1a1a;
+            border-color: rgba(26, 26, 26, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(26, 26, 26, 0.2);
+            transform: translateY(-2px);
+            border-color: #1a1a1a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border-color: rgba(76, 175, 80, 0.2);
+        }
+        
+        .btn-success:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateY(-2px);
+            border-color: #4CAF50;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+        
+        /* Modal Styling */
+        .modal-content {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid var(--border);
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+        }
+        
+        .modal-header h5 {
+            font-weight: 600;
+            color: white;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            background: white;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            background: var(--light);
+        }
+        
+        /* Form Elements */
+        .form-control {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 0.2rem rgba(228, 87, 10, 0.1);
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--accent1);
+            border-color: var(--accent1);
+        }
+        
+        /* Delete Modal Specific */
+        .delete-modal .modal-header {
+            background: linear-gradient(135deg, #F44336, #D32F2F);
+        }
+        
+        .alert-warning {
+            background: rgba(228, 87, 10, 0.1);
+            border: 1px solid var(--accent2);
+            color: var(--text);
+            border-radius: 8px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--accent1);
+            background: white;
+            border-radius: 12px;
+            border: 2px dashed rgba(228, 87, 10, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .empty-state i {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent1);
+            opacity: 0.7;
+        }
+        
+        .empty-state h3 {
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .empty-state p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(228, 87, 10, 0.3);
+            border: 2px solid white;
+        }
+        
+        .scroll-top-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-top-btn:hover {
+            background: linear-gradient(135deg, var(--accent3), var(--accent1));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(228, 87, 10, 0.4);
+        }
+        
+        /* Cards Count Badge */
+        .cards-count {
+            background: rgba(241, 240, 239, 0.96);
+            color: var(--accent1);
+            padding: 0.5rem 1rem;
+            border-radius: 33px;
+            font-size: 0.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: right;
+            gap: 0.5rem;
+            border: 1px solid rgb(23, 9, 2)   ;
+            box-shadow: 0 2px 8px rgba(228, 87, 10, 0.15);
+        }
+        
+        /* Links */
+        a.text-primary {
+            color: var(--accent1) !important;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        a.text-primary:hover {
+            color: var(--accent2) !important;
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .header-content, 
+            .footer-content,
+            .dashboard-header,
+            .cards-scroll-container {
+                padding: 0 15px;
+            }
+            
+            .cards-scroll-container {
+                max-height: calc(100vh - 220px);
+            }
+            
+            .card-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+            
+            .card-header-left {
+                width: 100%;
+                order: 1;
+            }
+            
+            .card-status {
+                margin-right: 0;
+                order: 2;
+            }
+            
+            .card-arrow {
+                order: 3;
+            }
+            
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+            
+            .btn-action {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .dashboard-header .btn-lg {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .footer-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .scroll-top-btn {
+                bottom: 70px;
+                right: 15px;
+                width: 44px;
+                height: 44px;
+            }
+            
+            .empty-state {
+                padding: 2rem 1rem;
+            }
+            
+            .header-logo-main {
+                max-width: 140px;
+                height: 35px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-id {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+            
+            .card-title {
+                font-size: 1rem;
+            }
+            
+            .info-value {
+                font-size: 0.95rem;
+            }
+            
+            .badge {
+                font-size: 0.8rem;
+                padding: 0.25rem 0.5rem;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.75rem;
+            }
+            
+            .header-logo-main {
+                max-width: 120px;
+                height: 30px;
+            }
+            
+            .cards-scroll-container {
+                max-height: calc(100vh - 200px);
+            }
+            
+            .logo-section {
+                gap: 0.75rem;
+            }
+        }
+        
+        /* Animation */
+        .collapse {
+            transition: all 0.3s ease;
+        }
+        
+        .card-body {
+            transition: all 0.3s ease;
+        }
+        
+        /* Loading Animation */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+        
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body class="p-4">
-
-    <!-- Header -->
-    <div class="dashboard-header mb-4">
-        <h2 class="fw-bold">Results Dashboard</h2>
-        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addResultModal">
-            + Add Result
-        </button>
-    </div>
-
-    <!-- Table -->
-    <div class="table-container">
-        <table class="table table-bordered table-striped align-middle">
-            <thead>
-                <tr>
-                    <th width="5%">ID</th>
-                    <th width="25%">Title</th>
-                    <th width="10%">Active</th>
-                    <th width="20%">Public URL</th>
-                    <th width="20%">Created</th>
-                    <th width="20%">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for r in results %}
-                <tr>
-                    <td class="fw-semibold">{{ forloop.counter }}</td>
-                    <td>{{ r.title }}</td>
-                    <td>
-                        {% if r.is_active %}
-                            <span class="badge bg-success">Active</span>
-                        {% else %}
-                            <span class="badge bg-secondary">Inactive</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if r.is_active %}
-                            <a href="/results/{{ r.unique_slug }}/" target="_blank" class="text-decoration-none">
-                                View Result
-                            </a>
-                        {% else %}
-                            <span class="text-muted">Inactive</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ r.created_at|date:"Y-m-d H:i" }}</td>
-                    <td>
-                        <!-- Edit Button (Modal) -->
-                        <button type="button" class="btn btn-warning btn-sm btn-action"
-                                data-bs-toggle="modal" data-bs-target="#editResultModal"
-                                onclick="fillEditModal({{ r.id }}, '{{ r.title|escapejs }}', {{ r.is_active|yesno:'true,false' }})">
-                            Edit
-                        </button>
-
-                        <!-- Delete Button (Now Opens Modal) -->
-                        <button type="button" class="btn btn-danger btn-sm btn-action mt-1"
-                                data-bs-toggle="modal" data-bs-target="#deleteResultModal"
-                                onclick="setDeleteId({{ r.id }}, '{{ r.title|escapejs }}')">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <!-- ADD RESULT MODAL (unchanged) -->
-    <div class="modal fade" id="addResultModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add New Result</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="header-logo-wrap">
+                    <img class="header-logo-main"
+                         src="/static/logo.png"
+                         onerror="this.src='https://qualitythought.in/wp-content/uploads/2025/10/1-3-2048x694.png';"
+                         alt="Institution Logo">
                 </div>
-                <div class="modal-body">
-                    <form method="POST" action="/add-result/" enctype="multipart/form-data" id="resultForm">
-                        {% csrf_token %}
-                        <label>Title:</label>
-                        <input type="text" name="title" class="form-control" required>
-                        <label class="mt-3">Upload Excel/CSV File:</label>
-                        <input type="file" name="file" class="form-control" accept=".xlsx,.csv" required>
-                        <label class="mt-3">Active:</label><br>
-                        <input type="checkbox" name="is_active">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-success" onclick="document.getElementById('resultForm').submit();">
-                        Save
-                    </button>
+                <div class="logo-text">
+                    <h1>Results Management System</h1>
+                    <p>Admin Dashboard</p>
                 </div>
             </div>
+            
+           
         </div>
-    </div>
+    </header>
 
-    <!-- EDIT RESULT MODAL (already working) -->
-    <div class="modal fade" id="editResultModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Result</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" id="editForm" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="result_id" id="editResultId">
-                        <label>Title:</label>
-                        <input type="text" name="title" id="editTitle" class="form-control" required>
-                        <label class="mt-3">Replace File (Optional):</label>
-                        <input type="file" name="file" class="form-control" accept=".xlsx,.csv">
-                        <div class="mt-3">
-                            <label>Active:</label><br>
-                            <input type="checkbox" name="is_active" id="editIsActive">
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="dashboard-header">
+            
+            
+            <button class="btn btn-primary btn-lg d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addResultModal">
+                <i class="fas fa-plus-circle me-2"></i> Add Result
+                
+            </button>
+            
+        </div>
+
+        <!-- Cards Scroll Container -->
+        <div class="cards-scroll-container">
+            <!-- Cards Container -->
+            <div class="cards-container">
+                {% if results %}
+                    {% for r in results %}
+                    <div class="result-card" id="card-{{ r.id }}">
+                        <!-- Card Header -->
+                        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#cardBody-{{ r.id }}" aria-expanded="false">
+                            <div class="card-header-left">
+                                <div class="card-id">{{ forloop.counter }}</div>
+                                <div class="card-title">{{ r.title }}</div>
+                            </div>
+                            
+                            <div class="card-status">
+                                {% if r.is_active %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i>Active
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-times-circle me-1"></i>Inactive
+                                    </span>
+                                {% endif %}
+                            </div>
+                            
+                            <i class="fas fa-chevron-down card-arrow"></i>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-success" onclick="document.getElementById('editForm').submit();">
-                        Update
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                        
+                        <!-- Card Body (Collapsible Content) -->
+                        <div class="collapse card-body" id="cardBody-{{ r.id }}">
+                            <div class="info-grid">
+                                <!-- ID -->
+                                <div class="info-item">
+                                    <span class="info-label">Result ID</span>
+                                    <span class="info-value">
+                                        {{ forloop.counter }}
+                                    </span>
+                                </div>
+                                
+                                <!-- Title -->
+                                <div class="info-item">
+                                    <span class="info-label">Title</span>
+                                    <span class="info-value">
+                                        {{ r.title }}
+                                    </span>
+                                </div>
+                                
+                                <!-- Status -->
+                                <div class="info-item">
+                                    <span class="info-label">Status</span>
+                                    <span class="info-value">
+                                        {% if r.is_active %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check-circle me-1"></i>Active
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-times-circle me-1"></i>Inactive
+                                            </span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                
+                                <!-- Public URL -->
+                                <div class="info-item">
+                                    <span class="info-label">Public URL</span>
+                                    <span class="info-value">
+                                        {% if r.is_active %}
+                                            <a href="/results/{{ r.unique_slug }}/" target="_blank" class="text-decoration-none text-primary">
+                                                <i class="fas fa-link me-1"></i>View Result
+                                            </a>
+                                        {% else %}
+                                            <span class="text-muted">
+                                                <i class="fas fa-link me-1"></i>Inactive
+                                            </span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                
+                                <!-- Created Date -->
+                                <div class="info-item">
+                                    <span class="info-label">Created</span>
+                                    <span class="info-value">
+                                        <i class="fas fa-calendar me-1"></i>
+                                        {{ r.created_at|date:"Y-m-d H:i" }}
+                                    </span>
+                                </div>
+                                
+                                <!-- Last Modified -->
+                                {% if r.updated_at %}
+                                <div class="info-item">
+                                    <span class="info-label">Last Modified</span>
+                                    <span class="info-value">
+                                        <i class="fas fa-clock me-1"></i>
+                                        {{ r.updated_at|date:"Y-m-d H:i" }}
+                                    </span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="card-actions">
+                                <!-- Edit Button -->
+                                <button type="button" class="btn btn-warning btn-action"
+                                        data-bs-toggle="modal" data-bs-target="#editResultModal"
+                                        onclick="fillEditModal({{ r.id }}, '{{ r.title|escapejs }}', {{ r.is_active|yesno:'true,false' }})">
+                                    <i class="fas fa-pencil me-1"></i>Edit Result
+                                </button>
 
-    <!-- DELETE CONFIRMATION MODAL (NEW) -->
-    <div class="modal fade" id="deleteResultModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-danger">
-                        <i class="bi bi-exclamation-triangle-fill"></i> Confirm Delete
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete the result:</p>
-                    <strong id="deleteTitleDisplay"></strong>?
-                    <br><br>
-                    <small class="text-danger">This action cannot be undone.</small>
-                </p>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a id="confirmDeleteBtn" href="#" class="btn btn-danger">
-                        Yes, Delete It
-                    </a>
+                                <!-- Delete Button -->
+                                <button type="button" class="btn btn-danger btn-action"
+                                        data-bs-toggle="modal" data-bs-target="#deleteResultModal"
+                                        onclick="setDeleteId({{ r.id }}, '{{ r.title|escapejs }}')">
+                                    <i class="fas fa-trash me-1"></i>Delete Result
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Empty State -->
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No Results Found</h3>
+                        <p class="mb-4">Add your first result to get started</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addResultModal">
+                            <i class="fas fa-plus-circle me-2"></i>Add Result
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <button class="scroll-top-btn" id="scrollTopBtn">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+
+        <!-- ADD RESULT MODAL -->
+        <div class="modal fade" id="addResultModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-plus-circle me-2"></i>Add New Result
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="/add-result/" enctype="multipart/form-data" id="resultForm">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Title</label>
+                                <input type="text" name="title" class="form-control" placeholder="Enter result title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Upload Excel/CSV File</label>
+                                <input type="file" name="file" class="form-control" accept=".xlsx,.csv" required>
+                                <small class="text-muted">Supported formats: .xlsx, .csv</small>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" name="is_active" id="isActiveSwitch">
+                                <label class="form-check-label fw-semibold" for="isActiveSwitch">
+                                    Active
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" onclick="document.getElementById('resultForm').submit();">
+                            <i class="fas fa-check-circle me-1"></i>Save Result
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- EDIT RESULT MODAL -->
+        <div class="modal fade" id="editResultModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-pencil-square me-2"></i>Edit Result
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" id="editForm" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="result_id" id="editResultId">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Title</label>
+                                <input type="text" name="title" id="editTitle" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Replace File (Optional)</label>
+                                <input type="file" name="file" class="form-control" accept=".xlsx,.csv">
+                                <small class="text-muted">Leave empty to keep current file</small>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" name="is_active" id="editIsActive">
+                                <label class="form-check-label fw-semibold" for="editIsActive">
+                                    Active
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" onclick="document.getElementById('editForm').submit();">
+                            <i class="fas fa-check-circle me-1"></i>Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE CONFIRMATION MODAL -->
+        <!-- DELETE CONFIRMATION MODAL -->
+<div class="modal fade delete-modal" id="deleteResultModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Confirm Delete
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning border-0 mb-4">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Warning:</strong> This action cannot be undone.
+                </div>
+                <p class="mb-3">Are you sure you want to delete the result?</p>
+                <h5 class="text-center mb-4" id="deleteTitleDisplay" style="color: var(--accent1); font-weight: 600;"></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times-circle me-1"></i>Cancel
+                </button>
+                <a id="confirmDeleteBtn" href="#" class="btn btn-danger">
+                    <i class="fas fa-trash me-1"></i>Yes, Delete
+                </a>
+            </div>
+        </div>
     </div>
+</div>
+    </main>
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; 2024 Results Management System. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-shield-alt me-1"></i>Privacy Policy</a>
+                <a href="#"><i class="fas fa-file-alt me-1"></i>Terms of Service</a>
+                <a href="#"><i class="fas fa-envelope me-1"></i>Contact Support</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -181,6 +1154,114 @@
         function setDeleteId(id, title) {
             document.getElementById('deleteTitleDisplay').textContent = title;
             document.getElementById('confirmDeleteBtn').href = `/delete-result/${id}/`;
+        }
+
+        // Initialize collapsible cards functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for all card headers
+            const cardHeaders = document.querySelectorAll('.card-header');
+            
+            cardHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const arrow = this.querySelector('.card-arrow');
+                    const isCollapsed = this.classList.contains('collapsed');
+                    
+                    // Toggle arrow rotation
+                    if (isCollapsed) {
+                        arrow.classList.add('rotated');
+                        this.classList.remove('collapsed');
+                    } else {
+                        arrow.classList.remove('rotated');
+                        this.classList.add('collapsed');
+                    }
+                });
+            });
+
+            // Add loading state to form submissions
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    const submitBtn = this.querySelector('button[type="submit"], button[onclick*="submit"]');
+                    if (submitBtn) {
+                        submitBtn.classList.add('btn-loading');
+                        submitBtn.disabled = true;
+                    }
+                });
+            });
+
+            // Auto-expand first card if it's the only one
+            const cards = document.querySelectorAll('.result-card');
+            if (cards.length === 1) {
+                const firstCardHeader = cards[0].querySelector('.card-header');
+                const firstCardArrow = cards[0].querySelector('.card-arrow');
+                const firstCardBody = cards[0].querySelector('.collapse');
+                
+                // Use Bootstrap's collapse method to expand
+                if (firstCardBody) {
+                    const bsCollapse = new bootstrap.Collapse(firstCardBody, {
+                        toggle: true
+                    });
+                    firstCardHeader.classList.remove('collapsed');
+                    firstCardArrow.classList.add('rotated');
+                }
+            }
+            
+            // Scroll to top button functionality
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            const cardsContainer = document.querySelector('.cards-scroll-container');
+            
+            // Show/hide scroll to top button
+            cardsContainer.addEventListener('scroll', function() {
+                if (this.scrollTop > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+            
+            // Scroll to top when button is clicked
+            scrollTopBtn.addEventListener('click', function() {
+                cardsContainer.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Function to manually toggle card expansion
+        function toggleCard(cardId) {
+            const card = document.getElementById(`card-${cardId}`);
+            const header = card.querySelector('.card-header');
+            const arrow = card.querySelector('.card-arrow');
+            const body = card.querySelector('.collapse');
+            
+            const bsCollapse = new bootstrap.Collapse(body, {
+                toggle: true
+            });
+            
+            const isExpanded = header.classList.contains('collapsed');
+            arrow.classList.toggle('rotated', isExpanded);
+            header.classList.toggle('collapsed', !isExpanded);
+        }
+        
+        // Function to scroll to specific card
+        function scrollToCard(cardId) {
+            const card = document.getElementById(`card-${cardId}`);
+            const container = document.querySelector('.cards-scroll-container');
+            
+            if (card && container) {
+                const cardTop = card.offsetTop;
+                container.scrollTo({
+                    top: cardTop - 20,
+                    behavior: 'smooth'
+                });
+                
+                // Expand the card if it's collapsed
+                const header = card.querySelector('.card-header');
+                if (header.classList.contains('collapsed')) {
+                    toggleCard(cardId);
+                }
+            }
         }
     </script>
 </body>

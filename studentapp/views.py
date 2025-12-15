@@ -5,7 +5,7 @@ import pandas as pd
 def view_result(request, slug):
     # get active result
     result = get_object_or_404(Result, unique_slug=slug, is_active=True)
-
+ 
     # reading file (CSV or Excel)
     file_path = result.file.path
 

@@ -3,621 +3,344 @@
 <head>
   <title>{{ result.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    :root{
-      --bg:#f5f7fa;
-      --card-bg:#ffffff;
-      --accent1:#2c3e50;
-      --accent2:#3498db;
-      --accent3:#e74c3c;
-      --success:#27ae60;
-      --text:#333333;
-      --light:#f8f9fa;
-      --border:#e0e0e0;
-      --header-bg:#f1f5f9;
-      --row-hover:#f8fafc;
-    }
-
-    html,body{
-      margin:0;
-      padding:0;
-      background:var(--bg);
-      font-family:"Inter", "Segoe UI", Roboto, Arial, sans-serif;
-      line-height:1.5;
-    }
-
-    .page{
-      display:block;
-      width:100%;
-      padding:20px 10px;
-      box-sizing:border-box;
-      min-height:100vh;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 32px 24px;
-      border-radius: 16px;
-      background: white;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-    }
-
-    .logo-wrap{
-      display:flex;
-      justify-content:center;
-      margin-bottom:24px;
-      padding-bottom:16px;
-      border-bottom:1px solid var(--border);
-    }
-
-    .logo-main{
-      max-width:220px;
-      width:55%;
-      height:auto;
-    }
-
-    h2{
-      color:var(--accent1);
-      font-size:1.9rem;
-      font-weight:700;
-      margin:0 0 28px 0;
-      text-align:center;
-      position:relative;
-      padding-bottom:12px;
-    }
-
-    h2:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent1), var(--accent2));
-      border-radius: 2px;
-    }
-
-    .input-group{
-      text-align:left;
-      margin-bottom:28px;
-      max-width:600px;
-      margin-left:auto;
-      margin-right:auto;
-    }
-
-    label{
-      color:var(--accent1);
-      font-weight:600;
-      margin-bottom:10px;
-      display:block;
-      font-size:1.05rem;
-      letter-spacing:0.3px;
-    }
-
-    input{
-      width:100%;
-      padding:16px 18px;
-      font-size:1.1rem;
-      border:1.5px solid #d0d0d7;
-      border-radius:10px;
-      background:var(--light);
-      outline:none;
-      box-sizing:border-box;
-      transition: all 0.3s ease;
-    }
-
-    input:focus {
-      border-color: var(--accent2);
-      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-    }
-
-    button{
-      width:100%;
-      max-width:600px;
-      background:linear-gradient(135deg, var(--accent1), var(--accent2));
-      border:none;
-      padding:16px;
-      color:#fff;
-      font-size:1.15rem;
-      font-weight:600;
-      border-radius:10px;
-      cursor:pointer;
-      box-shadow:0 4px 15px rgba(44, 62, 80, 0.2);
-      transition: all 0.3s ease;
-      letter-spacing:0.5px;
-      display:block;
-      margin:0 auto;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(44, 62, 80, 0.25);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    /* Results Table Styling */
-    .results-container {
-      margin-top: 30px;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .results-header {
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-      color: white;
-      padding: 20px;
-      border-radius: 12px 12px 0 0;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .results-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0 0 8px 0;
-    }
-
-    .results-subtitle {
-      font-size: 1rem;
-      opacity: 0.9;
-      margin: 0;
-    }
-
-    .results-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 0 0 12px 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-
-    .results-table th {
-      background-color: var(--header-bg);
-      color: var(--accent1);
-      font-weight: 700;
-      text-align: left;
-      padding: 18px 16px;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .results-table td {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.95rem;
-      vertical-align: middle;
-    }
-
-    .results-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .results-table tr:hover {
-      background-color: var(--row-hover);
-    }
-
-    .key-value {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .key {
-      font-weight: 600;
-      color: var(--accent1);
-      flex: 1;
-      display: flex;
-      align-items: center;
-    }
-
-    .key i {
-      margin-right: 10px;
-      color: var(--accent2);
-      width: 20px;
-      text-align: center;
-    }
-
-    .value {
-      flex: 1;
-      text-align: right;
-      padding-left: 10px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: center;
-      min-width: 80px;
-    }
-
-    .badge-success {
-      background-color: rgba(39, 174, 96, 0.15);
-      color: var(--success);
-      border: 1px solid rgba(39, 174, 96, 0.3);
-    }
-
-    .badge-warning {
-      background-color: rgba(241, 196, 15, 0.15);
-      color: #f39c12;
-      border: 1px solid rgba(241, 196, 15, 0.3);
-    }
-
-    .badge-danger {
-      background-color: rgba(231, 76, 60, 0.15);
-      color: var(--accent3);
-      border: 1px solid rgba(231, 76, 60, 0.3);
-    }
-
-    .badge-info {
-      background-color: rgba(52, 152, 219, 0.15);
-      color: var(--accent2);
-      border: 1px solid rgba(52, 152, 219, 0.3);
-    }
-
-    .no-results{
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      margin-top: 20px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border-left: 4px solid var(--accent3);
-    }
-
-    .no-results i {
-      font-size: 2.5rem;
-      color: var(--accent3);
-      margin-bottom: 15px;
-    }
-
-    .footer-actions {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-
-    .action-btn {
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      border: none;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #f1f5f9;
-      color: var(--accent1);
-      border: 1px solid var(--border);
-    }
-
-    .btn-success {
-      background: linear-gradient(135deg, var(--success), #2ecc71);
-      color: white;
-    }
-
-    .action-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .stats-container {
-      display: flex;
-      justify-content: space-around;
-      background: var(--header-bg);
-      border-radius: 10px;
-      padding: 20px;
-      margin: 25px 0;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .stat-item {
-      text-align: center;
-      flex: 1;
-      min-width: 150px;
-    }
-
-    .stat-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent1);
-      margin-bottom: 5px;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Responsive improvements */
-    @media (max-width: 768px) {
-      .card {
-        padding: 20px 15px;
-      }
-      
-      h2 {
-        font-size: 1.6rem;
-      }
-      
-      .results-table {
-        display: block;
-        overflow-x: auto;
-      }
-      
-      .results-table th,
-      .results-table td {
-        padding: 12px 10px;
-        font-size: 0.9rem;
-      }
-      
-      .key-value {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .value {
-        text-align: left;
-        padding-left: 0;
-        margin-top: 5px;
-        width: 100%;
-      }
-      
-      .footer-actions {
-        flex-direction: column;
-      }
-      
-      .action-btn {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .stats-container {
-        flex-direction: column;
-        gap: 20px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .results-table th,
-      .results-table td {
-        padding: 18px 24px;
-      }
-    }
-
-    @media print {
-      .page {
-        padding: 0;
-      }
-      
-      .card {
-        box-shadow: none;
-        margin: 0;
-        max-width: 100%;
-        padding: 20px;
-      }
-      
-      .input-group, button, .no-results, .footer-actions, .stats-container {
-        display: none;
-      }
-      
-      .results-table {
-        box-shadow: none;
-        border: 1px solid #000;
-      }
-      
-      .results-table th {
-        background-color: #f1f1f1 !important;
-        color: #000 !important;
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Compact Table Styling */
-.results-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  font-size: 0.9rem;
+<style>
+:root{
+  --bg:#f5f7fa;
+  --card-bg:#ffffff;
+  --accent1:#e4570a;
+  --accent2:#ff8400;
+  --accent3:#d4450d;
+  --success:#ae6f27;
+  --text:#333333;
+  --light:#f8f9fa;
+  --border:#e0e0e0;
+  --header-bg:#f1f5f9;
+  --row-hover:#f8fafc;
 }
 
-.results-table tbody tr {
-  border-bottom: 1px solid #f0f0f0;
-  transition: background-color 0.2s ease;
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  font-family:"Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  overflow-x:hidden !important;
 }
 
-.results-table tbody tr:last-child {
-  border-bottom: none;
+/* PAGE & CARD */
+.page{
+  width:100%;
+  padding:20px 10px;
+  box-sizing:border-box;
+  min-height:100vh;
 }
 
-.results-table tbody tr:hover {
-  background-color: #f9f9f9;
+.card{
+  width:100%;
+  max-width:700px;
+  margin:20px auto;
+  padding:24px 18px;   /* YOUR ORIGINAL PADDING */
+  border-radius:16px;
+  background:white;
+  box-shadow:0 4px 18px rgba(0,0,0,0.15);
+  overflow-x:hidden !important;
 }
 
-.results-table td {
-  padding: 10px 12px;
-  vertical-align: middle;
+/* LOGO */
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--border);
 }
 
-.field-name {
-  width: 40%;
-  color: #555;
+.logo-main{
+  max-width:180px;
+  width:60%;
+  height:auto;
+}
+
+/* HEADER */
+h2{
+  text-align:center;
+  font-size:1.7rem;
+  font-weight:700;
+  color:var(--accent1);
+  margin-bottom:25px;
+  position:relative;
+}
+
+h2:after{
+  content:'';
+  width:70px;
+  height:3px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  position:absolute;
+  bottom:-8px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* SEARCH INPUT */
+.input-group{
+  max-width:500px;
+  margin:0 auto 25px;
+}
+
+label{
+  font-weight:600;
+  color:var(--accent1);
+  margin-bottom:6px;
+  font-size:1rem;
+}
+
+input{
+  width:100%;
+  padding:14px 16px;
+  font-size:1rem;
+  border:1.4px solid #d0d0d7;
+  border-radius:10px;
+  background:var(--light);
+  outline:none;
+}
+
+input:focus{
+  border-color:var(--accent2);
+}
+
+/* Validation message */
+.error-message {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  display: none;
   font-weight: 500;
-  border-right: 1px solid #f0f0f0;
 }
 
-.field-content {
-  display: flex;
+.error-message.show {
+  display: block;
+}
+
+input.error {
+  border-color: #dc2626;
+}
+
+/* SEARCH BUTTON */
+button{
+  width:100%;
+  max-width:500px;
+  display:block;
+  margin:0 auto;
+  margin-bottom:28px;
+  padding:14px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  border:none;
+  color:white;
+  font-size:1.1rem;
+  font-weight:600;
+  cursor:pointer;
+  transition: opacity 0.3s;
+}
+
+button:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* RESULTS HEADER */
+.results-header{
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  color:white;
+  padding:18px;
+  text-align:center;
+  border-radius:12px 12px 0 0;
+}
+
+/* ⭐ WRAPPER TO FIX LEFT+RIGHT GAP */
+.results-wrap{
+  padding:0 18px;     /* PERFECT EVEN GAP ON BOTH SIDES */
+  background:white;
+  border-radius:0 0 12px 12px;
+  box-sizing:border-box;
+}
+
+/* TABLE */
+.results-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  word-break:break-word;
+}
+
+.results-table tr{
+  border-bottom:1px solid var(--border);
+}
+
+.results-table td{
+  padding:10px 10px;
+  vertical-align:middle;
+  font-size:0.95rem;
+}
+
+.field-name{
+  width:40%;
+  color:#444;
+  font-weight:600;
+}
+
+.field-value{
+  width:60%;
+}
+
+/* FIELD CONTENT */
+.field-content{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.field-text{
+  font-size:0.9rem;
+}
+
+.normal-value,
+.rank-value,
+.percentage-value,
+.score-value{
+  word-break:break-word;
+}
+
+/* BADGES */
+.compact-badge{
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:0.8rem;
+  font-weight:600;
+}
+
+.success{ background:#e7f7ef; color:#10b981; }
+.warning{ background:#fff7d8; color:#d97706; }
+.danger{ background:#fde2e2; color:#dc2626; }
+.info{ background:#e0edff; color:#2563eb; }
+
+/* FOOTER */
+.footer-actions{
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  gap: 15px;
+}
+
+.btn-danger{
+  padding:12px 20px;
+  background:#222;
+  color:white;
+  border-radius:10px;
+  text-decoration: none;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
-.field-content i {
-  color: #4a6cf7;
-  width: 16px;
+.btn-secondary {
+  padding:12px 20px;
+  background:#6c757d;
+  color:white;
+  border-radius:10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* NO RESULTS */
+.no-results {
   text-align: center;
+  padding: 40px 20px;
+  color: #666;
 }
 
-.field-text {
-  font-size: 0.85rem;
+.no-results i {
+  font-size: 48px;
+  color: #ddd;
+  margin-bottom: 15px;
 }
 
-.field-value {
-  width: 60%;
-  font-weight: 400;
-  color: #333;
+.no-results h3 {
+  color: #555;
+  margin-bottom: 10px;
 }
 
-/* Compact Badges */
-.compact-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-align: center;
-  min-width: 70px;
-}
-
-.compact-badge.success {
-  background-color: #e7f7ef;
-  color: #10b981;
-  border: 1px solid #a7f3d0;
-}
-
-.compact-badge.warning {
-  background-color: #fffbeb;
-  color: #f59e0b;
-  border: 1px solid #fde68a;
-}
-
-.compact-badge.danger {
-  background-color: #fef2f2;
-  color: #ef4444;
-  border: 1px solid #fecaca;
-}
-
-.compact-badge.info {
-  background-color: #eff6ff;
-  color: #3b82f6;
-  border: 1px solid #bfdbfe;
-}
-
-/* Special Values */
-.rank-value {
-  color: #1d4ed8;
-  font-weight: 700;
-}
-
-.percentage-value {
-  color: #059669;
-  font-weight: 700;
-}
-
-.score-value {
-  color: #7c3aed;
-  font-weight: 700;
-}
-
-.normal-value {
-  font-size: 0.9rem;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .results-table {
-    font-size: 0.85rem;
+/* PRINT STYLES */
+@media print {
+  body * {
+    visibility: hidden;
   }
-  
-  .results-table td {
-    padding: 8px 10px;
+  .print-container, .print-container * {
+    visibility: visible;
   }
-  
-  .field-name {
-    width: 45%;
+  .print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
   }
-  
-  .field-value {
-    width: 55%;
-  }
-  
-  .compact-badge {
-    padding: 3px 8px;
-    font-size: 0.75rem;
-    min-width: 60px;
-  }
-  
-  .field-text {
-    font-size: 0.8rem;
-  }
-  
-  .normal-value {
-    font-size: 0.85rem;
+  .no-print {
+    display: none !important;
   }
 }
 
-@media (max-width: 480px) {
-  .results-table td {
-    padding: 6px 8px;
+/* MOBILE */
+@media(max-width:600px){
+  .card{
+    padding:18px 12px;
   }
-  
-  .field-content {
-    gap: 6px;
+  .results-table td{
+    padding:8px 8px;
+    font-size:0.75rem;
   }
-  
-  .field-content i {
-    width: 14px;
-    font-size: 0.8rem;
+  .field-name, .field-value{
+    width:50% !important;
+  }
+  .footer-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-danger, .btn-secondary {
+    width: 100%;
+    max-width: 250px;
   }
 }
-  </style>
+
+/* CENTER THE ENTIRE CARD */
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;   /* keeps card at top but centered horizontally */
+    padding-top: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 700px;
+}
+
+</style>
+
 </head>
 
 <body>
   <div class="page">
     <div class="card">
+
       <div class="logo-wrap">
         <img class="logo-main"
              src="/static/logo.png"
@@ -628,147 +351,363 @@
       <h2>Scholarship Results Portal</h2>
 
       <!-- Search Form -->
-      <form method="GET">
+      <form method="GET" id="searchForm">
         <div class="input-group">
-          <label><i class="fas fa-search"></i> Search by Name or Mobile Number</label>
-          <input name="q" value="{{ request.GET.q }}" placeholder="Example: Ravi Kumar / 98765XXXXX" required>
+          <label><i class="fas fa-search"></i> Search by Mobile Number</label>
+          <input name="q" id="mobileInput" value="{{ request.GET.q }}" 
+                 placeholder="Enter 10-digit mobile number only (e.g., 9876543210)" 
+                 required>
+          <div class="error-message" id="mobileError">
+            Please enter exactly 10 digits (numbers only)
+          </div>
         </div>
-        <button><i class="fas fa-search"></i> Search Results</button>
+
+        <button type="submit" id="searchBtn"><i class="fas fa-search"></i> Search Results</button>
       </form>
 
-      <!-- If Match Found -->
+      <!-- Results -->
       {% if matched_record %}
       <div class="results-container">
+
         <div class="results-header">
-          <h3 class="results-title">{{ result.title }} - Results</h3>
-          <p class="results-subtitle">Official Scholarship Examination Result Details</p>
+          <h3>{{ result.title }} - Results</h3>
+          <p>Official Scholarship Examination Result Details</p>
         </div>
-        
-  
-        
-        <!-- Results Table -->
-       <table class="results-table">
-  <tbody>
-    {% for key, value in matched_record.items %}
-    <tr>
-      <td class="field-name">
-        <div class="field-content">
-          {% if key == "Name" %}
-          <i class="fas fa-user fa-sm"></i>
-          {% elif key == "Mobile" or key == "Phone" %}
-          <i class="fas fa-phone fa-sm"></i>
-          {% elif key == "Score" or key == "Marks" or key == "Total Marks" %}
-          <i class="fas fa-chart-line fa-sm"></i>
-          {% elif key == "Rank" or key == "Position" %}
-          <i class="fas fa-trophy fa-sm"></i>
-          {% elif key == "Email" %}
-          <i class="fas fa-envelope fa-sm"></i>
-          {% elif key == "Scholarship" %}
-          <i class="fas fa-award fa-sm"></i>
-          {% elif key == "Date" or key == "Exam Date" %}
-          <i class="fas fa-calendar-alt fa-sm"></i>
-          {% elif key == "ID" or key == "Roll Number" or key == "Registration ID" %}
-          <i class="fas fa-id-card fa-sm"></i>
-          {% elif key == "Percentage" %}
-          <i class="fas fa-percentage fa-sm"></i>
-          {% elif key == "Status" or key == "Result" %}
-          <i class="fas fa-clipboard-check fa-sm"></i>
-          {% elif key == "Course" or key == "Program" %}
-          <i class="fas fa-graduation-cap fa-sm"></i>
-          {% elif key == "Center" or key == "Exam Center" %}
-          <i class="fas fa-map-marker-alt fa-sm"></i>
-          {% else %}
-          <i class="fas fa-info-circle fa-sm"></i>
-          {% endif %}
-          <span class="field-text">{{ key }}</span>
+
+        <!-- ⭐ WRAP TABLE FOR EQUAL SPACING -->
+        <div class="results-wrap">
+          <table class="results-table">
+            <tbody>
+              {% for key, value in matched_record.items %}
+              <tr>
+                <td class="field-name">
+                  <div class="field-content">
+                    {% if key == "Name" %}
+                      <i class="fas fa-user fa-sm"></i>
+                    {% elif key == "Mobile" or key == "Phone" %}
+                      <i class="fas fa-phone fa-sm"></i>
+                    {% elif key == "Score" or key == "Marks" %}
+                      <i class="fas fa-chart-line fa-sm"></i>
+                    {% elif key == "Rank" %}
+                      <i class="fas fa-trophy fa-sm"></i>
+                    {% elif key == "Email" %}
+                      <i class="fas fa-envelope fa-sm"></i>
+                    {% elif key == "Scholarship" %}
+                      <i class="fas fa-award fa-sm"></i>
+                    {% elif key == "Date" %}
+                      <i class="fas fa-calendar-alt fa-sm"></i>
+                    {% elif key == "ID" %}
+                      <i class="fas fa-id-card fa-sm"></i>
+                    {% else %}
+                      <i class="fas fa-info-circle fa-sm"></i>
+                    {% endif %}
+                    <span class="field-text">{{ key }}</span>
+                  </div>
+                </td>
+
+                <td class="field-value">
+                  {% if key == "Status" %}
+                    {% if value in "Selected Passed Qualified" %}
+                      <span class="compact-badge success">{{ value }}</span>
+                    {% elif value == "Pending" %}
+                      <span class="compact-badge warning">{{ value }}</span>
+                    {% elif value == "Failed" %}
+                      <span class="compact-badge danger">{{ value }}</span>
+                    {% else %}
+                      <span class="compact-badge info">{{ value }}</span>
+                    {% endif %}
+
+                  {% elif key == "Rank" %}
+                    <strong>#{{ value }}</strong>
+
+                  {% elif key == "Percentage" %}
+                    <strong>{{ value }}%</strong>
+
+                  {% elif key == "Score" or key == "Marks" %}
+                    <strong>{{ value }}</strong>
+
+                  {% else %}
+                    <span>{{ value }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </td>
-      <td class="field-value">
-        {% if key == "Status" or key == "Result" %}
-          {% if value == "Selected" or value == "Passed" or value == "Qualified" %}
-          <span class="compact-badge success">{{ value }}</span>
-          {% elif value == "Pending" or value == "Waiting" %}
-          <span class="compact-badge warning">{{ value }}</span>
-          {% elif value == "Failed" or value == "Not Selected" or value == "Rejected" %}
-          <span class="compact-badge danger">{{ value }}</span>
-          {% else %}
-          <span class="compact-badge info">{{ value }}</span>
-          {% endif %}
-        {% elif key == "Scholarship" %}
-          <span class="compact-badge success">{{ value }}</span>
-        {% elif key == "Rank" or key == "Position" %}
-          <strong class="rank-value">#{{ value }}</strong>
-        {% elif key == "Percentage" %}
-          <strong class="percentage-value">{{ value }}%</strong>
-        {% elif key == "Score" or key == "Marks" %}
-          <strong class="score-value">{{ value }}</strong>
-        {% else %}
-          <span class="normal-value">{{ value }}</span>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-        <!-- Footer Actions -->
+
         <div class="footer-actions">
-          <button class="action-btn btn-success" onclick="window.print()">
+          <a href="javascript:void(0);" onclick="generatePrintable()" class="btn-danger">
             <i class="fas fa-print"></i> Print Result
-          </button>
-          
-          
+          </a>
         </div>
+
       </div>
 
-      <!-- If Searched but Not Found -->
       {% elif request.GET.q %}
       <div class="no-results">
         <i class="fas fa-search"></i>
         <h3>No Results Found</h3>
         <p>No matching records found for "<strong>{{ request.GET.q }}</strong>"</p>
-        <p>Please check the spelling or try using your mobile number instead.</p>
-        
       </div>
-      {% endif %}
 
-      {% if not request.GET.q and not matched_record %}
-      <div style="text-align: center; margin-top: 40px; color: #666;">
-        <i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--accent2); margin-bottom: 15px;"></i>
-        <h3>Check Your Scholarship Results</h3>
-        <p>Enter your name or mobile number above to view your examination results</p>
-      </div>
       {% endif %}
     </div>
   </div>
 
-  <script>
-    // Add fade-in animation when results appear
-    document.addEventListener('DOMContentLoaded', function() {
-      const resultsContainer = document.querySelector('.results-container');
-      if (resultsContainer) {
-        resultsContainer.style.opacity = '0';
-        resultsContainer.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-          resultsContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          resultsContainer.style.opacity = '1';
-          resultsContainer.style.transform = 'translateY(0)';
-        }, 100);
+  <!-- Hidden Printable Container -->
+  <div id="printableContainer" style="display: none;">
+    <div class="print-container">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <img src="/static/logo.png" 
+             onerror="this.src='https://qualitythought.in/wp-content/uploads/2025/10/1-3-2048x694.png';"
+             alt="Institution Logo" style="max-width: 200px; height: auto;">
+      </div>
+      <h2 style="text-align: center; color: #e4570a; margin-bottom: 20px;">
+        Scholarship Results Portal - Official Result
+      </h2>
+      <div style="background: linear-gradient(135deg,#e4570a,#ff8400); color: white; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 20px;">
+        <h3 style="margin: 0;">{{ result.title }} - Official Result</h3>
+        <p style="margin: 5px 0 0 0;">Generated on: <span id="printDate"></span></p>
+      </div>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tbody id="printableTableBody">
+          <!-- Dynamic content will be inserted here -->
+        </tbody>
+      </table>
+      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px dashed #ccc;">
+        <p style="color: #666; font-size: 14px;">
+          This is an official document generated by the Scholarship Results Portal.<br>
+          For any queries, please contact the examination authority.
+        </p>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const results = document.querySelector('.results-container');
+  if (results) {
+    results.style.opacity = '0';
+    results.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      results.style.transition = '0.5s ease';
+      results.style.opacity = '1';
+      results.style.transform = 'translateY(0)';
+    }, 100);
+  }
+
+  // Mobile number validation
+  const mobileInput = document.getElementById('mobileInput');
+  const mobileError = document.getElementById('mobileError');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchForm = document.getElementById('searchForm');
+
+  // Function to validate mobile number
+  function validateMobileNumber(value) {
+    // Check if it's exactly 10 digits and contains only numbers
+    return /^\d{10}$/.test(value);
+  }
+
+  // Real-time validation as user types
+  mobileInput.addEventListener('input', function(e) {
+    let value = e.target.value;
+    
+    // Allow only digits
+    value = value.replace(/\D/g, '');
+    
+    // Limit to 10 digits
+    if (value.length > 10) {
+      value = value.slice(0, 10);
+    }
+    
+    // Update input value
+    e.target.value = value;
+    
+    // Validate and update UI
+    const isValid = validateMobileNumber(value);
+    
+    if (value && !isValid) {
+      mobileError.classList.add('show');
+      searchBtn.disabled = true;
+      mobileInput.classList.add('error');
+    } else {
+      mobileError.classList.remove('show');
+      searchBtn.disabled = !value || !isValid;
+      mobileInput.classList.remove('error');
+    }
+  });
+
+  // Form submission validation
+  searchForm.addEventListener('submit', function(e) {
+    const value = mobileInput.value;
+    const isValid = validateMobileNumber(value);
+    
+    if (!isValid) {
+      e.preventDefault();
+      mobileError.classList.add('show');
+      mobileInput.classList.add('error');
+      mobileInput.focus();
+    }
+  });
+
+  // Validate on page load if there's already a value
+  if (mobileInput.value) {
+    const value = mobileInput.value;
+    const isValid = validateMobileNumber(value);
+    
+    if (!isValid) {
+      mobileError.classList.add('show');
+      searchBtn.disabled = true;
+      mobileInput.classList.add('error');
+    }
+  }
+
+  // Add onpaste event to handle paste action
+  mobileInput.addEventListener('paste', function(e) {
+    // Let the paste happen first, then validate
+    setTimeout(() => {
+      let value = mobileInput.value;
+      
+      // Clean the pasted value
+      value = value.replace(/\D/g, '');
+      
+      // Limit to 10 digits
+      if (value.length > 10) {
+        value = value.slice(0, 10);
       }
       
-      // Focus on search input
-      const searchInput = document.querySelector('input[name="q"]');
-      if (searchInput && !searchInput.value) {
-        searchInput.focus();
+      // Update input value
+      mobileInput.value = value;
+      
+      // Validate
+      const isValid = validateMobileNumber(value);
+      
+      if (value && !isValid) {
+        mobileError.classList.add('show');
+        searchBtn.disabled = true;
+        mobileInput.classList.add('error');
+      } else {
+        mobileError.classList.remove('show');
+        searchBtn.disabled = !value || !isValid;
+        mobileInput.classList.remove('error');
       }
-    });
+    }, 10);
+  });
+});
+
+function generatePrintable() {
+  // Get current date for the print
+  const now = new Date();
+  const printDate = now.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  document.getElementById('printDate').textContent = printDate;
+  
+  // Get the table data from the visible results
+  const tableRows = document.querySelectorAll('.results-table tbody tr');
+  const printTableBody = document.getElementById('printableTableBody');
+  printTableBody.innerHTML = '';
+  
+  tableRows.forEach(row => {
+    const key = row.querySelector('.field-text').textContent;
+    let value = '';
     
-    // Simulate PDF download (would need backend integration)
-    function downloadResult() {
-      alert('PDF download functionality would be implemented with backend integration.');
-      // In a real implementation, this would call your backend to generate a PDF
-      // window.location.href = '/download-result?q={{ request.GET.q }}';
+    const fieldValue = row.querySelector('.field-value');
+    const badge = fieldValue.querySelector('.compact-badge');
+    const strong = fieldValue.querySelector('strong');
+    const span = fieldValue.querySelector('span');
+    
+    if (badge) {
+      value = badge.textContent;
+    } else if (strong) {
+      value = strong.textContent;
+    } else if (span) {
+      value = span.textContent;
+    } else {
+      value = fieldValue.textContent;
     }
-  </script>
+    
+    const printRow = document.createElement('tr');
+    printRow.style.borderBottom = '1px solid #eee';
+    printRow.innerHTML = `
+      <td style="padding: 10px; font-weight: bold; width: 40%;">${key}</td>
+      <td style="padding: 10px; width: 60%;">${value}</td>
+    `;
+    printTableBody.appendChild(printRow);
+  });
+  
+  // Generate print
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Print Result - Scholarship Portal</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 40px;
+          color: #333;
+        }
+        .print-container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          border: 1px solid #ddd;
+          border-radius: 10px;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0;
+        }
+        td {
+          padding: 12px 15px;
+          border-bottom: 1px solid #eee;
+        }
+        @media print {
+          body {
+            margin: 0;
+          }
+          .no-print {
+            display: none !important;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      ${document.getElementById('printableContainer').innerHTML}
+      <div style="text-align: center; margin-top: 20px;" class="no-print">
+        <button onclick="window.print()" style="padding: 10px 20px; background: #e4570a; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Print Now
+        </button>
+        <button onclick="window.close()" style="padding: 10px 20px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+          Close
+        </button>
+      </div>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+  
+  // Auto-print after a short delay (optional)
+  setTimeout(() => {
+    printWindow.focus();
+  }, 500);
+}
+
+function downloadAsPDF() {
+  // This function would typically integrate with a PDF generation library
+  // For now, we'll show an alert and use the print function as fallback
+  alert('PDF download functionality requires server-side setup. For now, please use the Print option and save as PDF from the print dialog.');
+  generatePrintable();
+}
+</script>
+
 </body>
 </html>

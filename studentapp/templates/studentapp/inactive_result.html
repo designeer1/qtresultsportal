@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result Unavailable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+  --bg:#f5f7fa;
+  --card-bg:#ffffff;
+  --accent1:#e4570a;
+  --accent2:#ff8400;
+  --accent3:#d4450d;
+  --text:#333333;
+  --light:#f8f9fa;
+  --border:#e0e0e0;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  font-family:"Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  overflow-x:hidden !important;
+}
+
+.page{
+  width:100%;
+  padding:20px 10px;
+  box-sizing:border-box;
+  min-height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card{
+  width:100%;
+  max-width:600px;
+  margin:20px auto;
+  padding:40px 30px;
+  border-radius:16px;
+  background:white;
+  box-shadow:0 4px 20px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:25px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+
+.logo-main{
+  max-width:200px;
+  height:auto;
+}
+
+.icon-container{
+  width:80px;
+  height:80px;
+  background:rgba(228, 87, 10, 0.1);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 25px;
+}
+
+.icon-container i{
+  font-size:2.5rem;
+  color:var(--accent1);
+}
+
+h1{
+  color:var(--accent1);
+  font-size:1.8rem;
+  margin-bottom:15px;
+  font-weight:700;
+}
+
+.message{
+  color:#666;
+  font-size:1.1rem;
+  line-height:1.6;
+  margin-bottom:25px;
+}
+
+.result-info{
+  background:var(--light);
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:25px;
+  border-left:4px solid var(--accent1);
+}
+
+.result-info h3{
+  color:var(--accent1);
+  margin:0 0 10px 0;
+  font-size:1.2rem;
+}
+
+.result-info p{
+  color:#555;
+  margin:0;
+  font-weight:500;
+}
+
+.action-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  margin-top:25px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 24px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:1rem;
+  transition:all 0.3s ease;
+  gap:10px;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg, var(--accent1), var(--accent2));
+  color:white;
+  border:none;
+}
+
+.btn-secondary{
+  background:var(--light);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover{
+  background:linear-gradient(135deg, var(--accent3), var(--accent1));
+}
+
+.contact-info{
+  margin-top:30px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  color:#777;
+  font-size:0.9rem;
+}
+
+.contact-info a{
+  color:var(--accent1);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.contact-info a:hover{
+  text-decoration:underline;
+}
+
+@media(max-width:600px){
+  .card{
+    padding:30px 20px;
+    margin:15px;
+  }
+  
+  h1{
+    font-size:1.5rem;
+  }
+  
+  .message{
+    font-size:1rem;
+  }
+  
+  .action-buttons{
+    flex-direction:column;
+  }
+  
+  .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
+</style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="card">
+      
+      <div class="logo-wrap">
+        <img class="logo-main"
+             src="/static/logo.png"
+             onerror="this.src='https://qualitythought.in/wp-content/uploads/2025/10/1-3-2048x694.png';"
+             alt="Quality Thought Logo">
+      </div>
+      
+      <div class="icon-container">
+        <i class="fas fa-clock"></i>
+      </div>
+      
+      <h1>Result Currently Unavailable</h1>
+      
+      <div class="message">
+        The scholarship result you're trying to access is currently unavailable or has been temporarily deactivated.
+      </div>
+      
+      <div class="result-info">
+        <h3>{{ result.title }}</h3>
+        <p>This result has been marked as inactive by the administrator.</p>
+      </div>
+      
+      <div class="action-buttons">
+        <a href="https://qualitythought.in" class="btn btn-primary" target="_blank">
+          <i class="fas fa-external-link-alt"></i>
+          Visit Quality Thought Website
+        </a>
+        
+        <a href="https://qualitythought.in/contact-us/" class="btn btn-secondary" target="_blank">
+          <i class="fas fa-headset"></i>
+          Contact Support
+        </a>
+      </div>
+      
+      <div class="contact-info">
+        <p>
+          For more information about scholarship results, please visit 
+          <a href="https://qualitythought.in" target="_blank">qualitythought.in</a> 
+          or contact our support team.
+        </p>
+        <p style="margin-top: 10px; font-size: 0.85rem;">
+          <i class="fas fa-info-circle"></i>
+          This result may become available again in the future. Please check back later.
+        </p>
+      </div>
+      
+    </div>
+  </div>
+</body>
+</html>

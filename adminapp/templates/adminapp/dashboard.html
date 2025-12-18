@@ -844,14 +844,14 @@
     <header class="main-header">
         <div class="header-content">
             <div class="logo-section">
-                <div class="header-logo-wrap">
+                <!-- <div class="header-logo-wrap">
                     <img class="header-logo-main"
                          src="/static/logo.png"
                          onerror="this.src='https://qualitythought.in/wp-content/uploads/2025/10/1-3-2048x694.png';"
                          alt="Institution Logo">
-                </div>
+                </div> -->
                 <div class="logo-text">
-                    <h1>Results Management System</h1>
+                    <h1>Scholarship Results Management System</h1>
                     <p>Admin Dashboard</p>
                 </div>
             </div>
@@ -938,21 +938,23 @@
                                 </div>
                                 
                                 <!-- Public URL -->
-                                <div class="info-item">
-                                    <span class="info-label">Public URL</span>
-                                    <span class="info-value">
-                                        {% if r.is_active %}
-                                            <a href="/results/{{ r.unique_slug }}/" target="_blank" class="text-decoration-none text-primary">
-                                                <i class="fas fa-link me-1"></i>View Result
-                                            </a>
-                                        {% else %}
-                                            <span class="text-muted">
-                                                <i class="fas fa-link me-1"></i>Inactive
-                                            </span>
-                                        {% endif %}
-                                    </span>
-                                </div>
                                 
+                                <!-- In dashboard.html, around line 170-180 -->
+<div class="info-item">
+    <span class="info-label">Public URL</span>
+    <span class="info-value">
+        {% if r.is_active %}
+            <a href="/results/{{ r.unique_slug }}/" target="_blank" class="text-decoration-none text-primary">
+                <i class="fas fa-link me-1"></i>View Result
+            </a>
+        {% else %}
+            <span class="text-muted">
+                <i class="fas fa-link me-1"></i>
+                <span class="text-warning">Inactive (Shows custom page)</span>
+            </span>
+        {% endif %}
+    </span>
+</div>
                                 <!-- Created Date -->
                                 <div class="info-item">
                                     <span class="info-label">Created</span>

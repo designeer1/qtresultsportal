@@ -1,11 +1,21 @@
 from django.shortcuts import render, get_object_or_404
 from adminapp.models import Result
 import pandas as pd
+from django.shortcuts import render, get_object_or_404
+from adminapp.models import Result
+import pandas as pd
 
 def view_result(request, slug):
-    # get active result
-    result = get_object_or_404(Result, unique_slug=slug, is_active=True)
- 
+    # Get result by slug (even if inactive)
+    result = get_object_or_404(Result, unique_slug=slug)
+    
+    # If result is inactive, show inactive template
+    if not result.is_active:
+        return render(request, "studentapp/inactive_result.html", {
+            "result": result
+        })
+    
+    # If result is active, proceed with normal flow
     # reading file (CSV or Excel)
     file_path = result.file.path
 

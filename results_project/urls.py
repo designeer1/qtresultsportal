@@ -6,9 +6,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('django-admin/', admin.site.urls),
 
+    # Admin app (public link generation)
     path('', include('adminapp.urls')),
+
+    # Student result search
     path('results/', include('studentapp.urls')),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files even when DEBUG=False (Render)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
 import uuid
-import os
 
 class Result(models.Model):
     title = models.CharField(max_length=200)
@@ -11,10 +10,8 @@ class Result(models.Model):
     unique_slug = models.SlugField(unique=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # auto-generate slug if not created
         if not self.unique_slug:
-            random_id = str(uuid.uuid4())[:6]
-            self.unique_slug = slugify(self.title) + "-" + random_id
+            self.unique_slug = slugify(self.title) + "-" + str(uuid.uuid4())[:6]
         super().save(*args, **kwargs)
 
     def __str__(self):

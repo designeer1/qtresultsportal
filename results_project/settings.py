@@ -16,7 +16,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================
 
 # IMPORTANT: Set this in Render Environment Variables
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+import os
+
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-local-key"
+)
 
 # Production mode
 DEBUG = False
